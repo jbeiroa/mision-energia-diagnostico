@@ -27,7 +27,11 @@ const FIELDS = [
   'm5_verde',
   'm5_amarillo',
   'm5_rojo',
-  'm5_pedido'
+  'm5_pedido',
+  'modelo_atomico',
+  'reaccion_quimica',
+  'reaccion_nuclear',
+  'modelo_reacciones_duda'
 ];
 
 function doGet() {

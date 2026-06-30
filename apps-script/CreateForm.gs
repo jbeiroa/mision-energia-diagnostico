@@ -52,6 +52,18 @@ function createFallbackGoogleForm() {
   form.addParagraphTextItem().setTitle('Conclusion posible');
   form.addParagraphTextItem().setTitle('Que falta saber');
 
+  form.addSectionHeaderItem().setTitle('Modelo y reacciones');
+  form.addParagraphTextItem()
+    .setTitle('Modelo atomico que recuerdan')
+    .setHelpText('Nucleo, electrones, protones, neutrones, niveles de energia, o lo que recuerden del modelo.');
+  form.addParagraphTextItem()
+    .setTitle('Reaccion quimica')
+    .setHelpText('Que cambia, que se conserva y que pasa con los enlaces.');
+  form.addParagraphTextItem()
+    .setTitle('Reaccion nuclear')
+    .setHelpText('Que cambia, que se conserva y que pasa con el nucleo.');
+  form.addParagraphTextItem().setTitle('Duda o ejemplo sobre modelo y reacciones');
+
   form.addSectionHeaderItem().setTitle('Semaforo final');
   form.addParagraphTextItem().setTitle('Verde: puedo explicar');
   form.addParagraphTextItem().setTitle('Amarillo: necesito repasar');

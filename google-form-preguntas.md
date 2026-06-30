@@ -79,14 +79,29 @@ Descripcion sugerida:
 21. Mini datos: que falta saber
     - Tipo: parrafo
 
-22. Verde: puedo explicar
+22. Modelo atomico que recuerdan
+    - Tipo: parrafo
+    - Ayuda: Nucleo, electrones, protones, neutrones, niveles de energia, o lo que recuerden del modelo.
+
+23. Reaccion quimica
+    - Tipo: parrafo
+    - Ayuda: Que cambia, que se conserva y que pasa con los enlaces.
+
+24. Reaccion nuclear
+    - Tipo: parrafo
+    - Ayuda: Que cambia, que se conserva y que pasa con el nucleo.
+
+25. Duda o ejemplo sobre modelo y reacciones
     - Tipo: parrafo
 
-23. Amarillo: necesito repasar
+26. Verde: puedo explicar
     - Tipo: parrafo
 
-24. Rojo: estoy perdido/a
+27. Amarillo: necesito repasar
     - Tipo: parrafo
 
-25. Pedido al profe
+28. Rojo: estoy perdido/a
+    - Tipo: parrafo
+
+29. Pedido al profe
     - Tipo: parrafo
