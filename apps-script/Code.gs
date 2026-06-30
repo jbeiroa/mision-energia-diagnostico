@@ -30,6 +30,12 @@ const FIELDS = [
   'm5_pedido'
 ];
 
+function doGet() {
+  return ContentService
+    .createTextOutput('Mision Energia endpoint activo')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function doPost(e) {
   try {
     const payload = parsePayload_(e);

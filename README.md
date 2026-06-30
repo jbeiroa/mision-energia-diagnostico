@@ -28,6 +28,17 @@ Pasos:
 
 Cuando `SUBMIT_URL` tiene una URL, el boton `Enviar respuestas` queda activo.
 
+Para verificar el despliegue, abrir la URL `/exec` en el navegador. Si esta bien publicada debe mostrar:
+
+`Mision Energia endpoint activo`
+
+Si aparece una pantalla de Google Drive con "No se pudo abrir el archivo", revisar la implementacion:
+
+- Tipo: `Aplicacion web`.
+- Ejecutar como: `Yo`.
+- Quien tiene acceso: `Cualquier persona`.
+- Usar la URL que termina en `/exec`, no el ID de implementacion.
+
 ## Google Forms
 
 Opcion automatica:

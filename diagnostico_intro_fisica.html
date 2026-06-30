@@ -450,7 +450,7 @@
   <iframe name="submitFrame" id="submitFrame" style="display:none;"></iframe>
 
   <script>
-    const SUBMIT_URL = "";
+    const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbwhiluQ_9ItzJ6-6IIvQi9Pnm0yDWdQmjv5KVg62srdwIZGCCSJI21K960EcU9edmMd/exec";
 
     const fields = [
       "curso", "equipo", "integrantes",
@@ -499,7 +499,7 @@
       const form = document.getElementById("submitForm");
       form.action = SUBMIT_URL;
       form.submit();
-      alert("Respuestas enviadas. Avisale al docente si aparece algún error.");
+      alert("Intentamos enviar las respuestas. Si el docente no las ve en la planilla, usen Preparar entrega.");
     }
 
     function labelFor(id) {
