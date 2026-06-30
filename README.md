@@ -30,6 +30,18 @@ Cuando `SUBMIT_URL` tiene una URL, el boton `Enviar respuestas` queda activo.
 
 Si se modifica `apps-script/Code.gs`, actualizar el codigo en Apps Script y crear una nueva version de la implementacion web. La pagina puede mandar campos nuevos, pero la Sheet solo los recibe si el Web App publicado usa el `Code.gs` actualizado.
 
+Para redeployar despues de un cambio:
+
+1. Abrir Apps Script desde la Sheet.
+2. Reemplazar el contenido por `apps-script/Code.gs`.
+3. Guardar.
+4. Ir a `Implementar` -> `Gestionar implementaciones`.
+5. Editar la implementacion web activa.
+6. En `Version`, elegir `Nueva version`.
+7. Confirmar que siga como `Ejecutar como: Yo` y acceso `Cualquier persona`.
+8. Implementar.
+9. Probar una respuesta desde la pagina y revisar la ultima fila de `Respuestas`.
+
 Para verificar el despliegue, abrir la URL `/exec` en el navegador. Si esta bien publicada debe mostrar:
 
 `Mision Energia endpoint activo`
