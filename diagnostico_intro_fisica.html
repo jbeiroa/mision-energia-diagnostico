@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagnóstico - Introducción a la Física</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f2;
+      --ink: #1e2528;
+      --muted: #5a6469;
+      --line: #d7ddd2;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --soft: #e6f3f0;
+      --warn: #fff3d6;
+      --danger: #fee2e2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    header {
+      background: #163236;
+      color: white;
+      padding: 28px 20px;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.12;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      max-width: 900px;
+    }
+
+    main {
+      padding: 22px 0 40px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 18px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 10px 0;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    button {
+      border: 1px solid #aab8ad;
+      background: white;
+      color: var(--ink);
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    button.warning {
+      background: var(--warn);
+      border-color: #e7c76c;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .55;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    section, aside, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 650;
+      color: #243033;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #bdc8c0;
+      border-radius: 8px;
+      padding: 10px;
+      font: inherit;
+      background: white;
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+
+    .mission {
+      display: none;
+    }
+
+    .mission.active {
+      display: block;
+    }
+
+    .mission h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: #075a52;
+      font-weight: 700;
+      font-size: .86rem;
+      margin-bottom: 10px;
+    }
+
+    .prompt {
+      background: #f8faf8;
+      border-left: 4px solid var(--accent);
+      padding: 12px;
+      margin: 12px 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fbfcfb;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: #203033;
+      margin-bottom: 4px;
+    }
+
+    .scale {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    input[type="range"] {
+      padding: 0;
+    }
+
+    .side-list {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    .side-list li {
+      margin: 6px 0;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    #deliveryBox {
+      display: none;
+      border-color: #94b8b2;
+      background: #f7fbfa;
+    }
+
+    #deliveryBox.visible {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: .94rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf3ef;
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media (max-width: 880px) {
+      .grid, .meta, .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        position: static;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header, .toolbar, aside, .no-print {
+        display: none !important;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .wrap {
+        width: 100%;
+      }
+
+      section, .card {
+        border: 0;
+        padding: 0;
+        page-break-inside: avoid;
+      }
+
+      .mission {
+        display: block;
+        border-top: 1px solid #999;
+        padding-top: 12px;
+        margin-top: 16px;
+      }
+
+      textarea, input {
+        border: 1px solid #777;
+      }
+
+      .print-only {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Misión Energía: diagnóstico de Introducción a la Física</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap toolbar no-print">
+      <button class="primary" id="saveBtn">Guardar respuestas</button>
+      <button class="primary" id="submitBtn" disabled>Enviar respuestas</button>
+      <button id="deliveryBtn">Preparar entrega</button>
+      <button class="warning" id="clearBtn">Borrar este equipo</button>
+    </div>
+
+    <div class="wrap grid">
+      <div class="stack" id="studentView">
+        <section>
+          <h2>Datos del equipo</h2>
+          <p class="note">Completen esto antes de empezar. Si trabajan individualmente, pongan su nombre y dejen “equipo” como Individual.</p>
+          <div class="meta">
+            <label>Curso
+              <input id="curso" placeholder="Ej.: 4º A">
+            </label>
+            <label>Equipo
+              <input id="equipo" placeholder="Ej.: Los Joule">
+            </label>
+            <label>Integrantes
+              <input id="integrantes" placeholder="Nombres">
+            </label>
+          </div>
+        </section>
+
+        <section id="deliveryBox">
+          <div class="badge">Entrega</div>
+          <h2>Resumen del equipo</h2>
+          <p class="note">Copien este texto o muéstrenselo al docente al terminar.</p>
+          <textarea id="deliveryText" readonly></textarea>
+        </section>
+
+        <section class="mission active" data-mission="1">
+          <div class="badge">Estación 1 - Bitácora perdida</div>
+          <h2>¿Qué recuerdan haber visto?</h2>
+          <div class="prompt">
+            Imaginen que tienen que contarle al profe nuevo qué hicieron antes de que se cortaran las clases. No importa si no están seguros: marquen seguridad alta, media o baja.
+          </div>
+          <div class="cards">
+            <label class="mini-card"><strong>Temas que seguro vimos</strong><textarea id="m1_seguro" placeholder="Ej.: calor y temperatura, circuitos, átomo..."></textarea></label>
+            <label class="mini-card"><strong>Temas que me suenan</strong><textarea id="m1_suenan" placeholder="Temas, actividades, experimentos, trabajos..."></textarea></label>
+            <label class="mini-card"><strong>Temas que no vimos o no recuerdo</strong><textarea id="m1_no" placeholder="Anoten dudas o huecos."></textarea></label>
+            <label class="mini-card"><strong>Cómo trabajaban</strong><textarea id="m1_metodo" placeholder="Carpeta, fotocopias, laboratorio, videos, evaluaciones..."></textarea></label>
+          </div>
+          <label>Confianza del equipo en este recuerdo
+            <div class="scale"><input id="m1_conf" type="range" min="1" max="5" value="3"><span id="m1_conf_out">3/5</span></div>
+          </label>
+        </section>
+
+        <section class="mission" data-mission="2">
+          <div class="badge">Estación 2 - Clasificador científico</div>
+          <h2>Ordenen conceptos y expliquen relaciones</h2>
+          <div class="prompt">
+            Clasifiquen las tarjetas en tres grupos: “materia”, “energía” y “formas de representar/medir”. Después elijan dos tarjetas y expliquen cómo se relacionan.
+          </div>
+          <div class="cards">
+            <div class="mini-card"><strong>Tarjetas</strong>átomo, molécula, electrón, reacción química, reacción nuclear, calor, temperatura, energía eléctrica, potencia, circuito, radiación, gráfico, tabla, fórmula, conservación</div>
+            <label class="mini-card"><strong>Materia</strong><textarea id="m2_materia"></textarea></label>
+            <label class="mini-card"><strong>Energía</strong><textarea id="m2_energia"></textarea></label>
+            <label class="mini-card"><strong>Representar o medir</strong><textarea id="m2_rep"></textarea></label>
+          </div>
+          <label>Relación explicada por el equipo
+            <textarea id="m2_relacion" placeholder="Ej.: calor y temperatura se relacionan, pero no son lo mismo porque..."></textarea>
+          </label>
+        </section>
+
+        <section class="mission" data-mission="3">
+          <div class="badge">Estación 3 - Caso cotidiano</div>
+          <h2>La física de un mate, una estufa o un celular</h2>
+          <div class="prompt">
+            Elijan una situación: calentar agua para mate, usar una estufa eléctrica, cargar un celular o frenar una bici. Expliquen qué sistema miran, qué energía entra o sale, y qué cambia.
+          </div>
+          <label>Situación elegida
+            <select id="m3_situacion">
+              <option>Calentar agua para mate</option>
+              <option>Usar una estufa eléctrica</option>
+              <option>Cargar un celular</option>
+              <option>Frenar una bicicleta</option>
+              <option>Otra</option>
+            </select>
+          </label>
+          <div class="cards">
+            <label class="mini-card"><strong>Sistema observado</strong><textarea id="m3_sistema" placeholder="¿Qué parte del fenómeno van a mirar?"></textarea></label>
+            <label class="mini-card"><strong>Intercambios o transformaciones</strong><textarea id="m3_intercambios" placeholder="Energía eléctrica, térmica, química, mecánica..."></textarea></label>
+            <label class="mini-card"><strong>Variables importantes</strong><textarea id="m3_variables" placeholder="Temperatura, tiempo, masa, potencia, material..."></textarea></label>
+            <label class="mini-card"><strong>Una duda investigable</strong><textarea id="m3_pregunta" placeholder="Pregunta que se podría investigar con datos o una experiencia."></textarea></label>
+          </div>
+        </section>
+
+        <section class="mission" data-mission="4">
+          <div class="badge">Estación 4 - Mini datos, mini decisión</div>
+          <h2>Lean datos y saquen una conclusión</h2>
+          <div class="prompt">
+            Se calentaron 200 ml de agua durante 6 minutos. Temperatura inicial: 20 °C. Temperaturas medidas: minuto 1: 31 °C, 2: 42 °C, 3: 53 °C, 4: 64 °C, 5: 75 °C, 6: 86 °C.
+          </div>
+          <div class="cards">
+            <label class="mini-card"><strong>¿Qué patrón ven?</strong><textarea id="m4_patron" placeholder="Sube igual, cada vez más rápido, cada vez más lento..."></textarea></label>
+            <label class="mini-card"><strong>¿Qué gráfico harían?</strong><textarea id="m4_grafico" placeholder="Ejes, unidades y forma esperada."></textarea></label>
+            <label class="mini-card"><strong>Conclusión posible</strong><textarea id="m4_conclusion" placeholder="Qué pueden afirmar con estos datos."></textarea></label>
+            <label class="mini-card"><strong>Qué falta saber</strong><textarea id="m4_falta" placeholder="Potencia de hornalla, recipiente, pérdidas de calor..."></textarea></label>
+          </div>
+        </section>
+
+        <section class="mission" data-mission="5">
+          <div class="badge">Estación 5 - Semáforo final</div>
+          <h2>Autoevaluación rápida</h2>
+          <div class="prompt">
+            Marquen cómo se sienten para empezar Introducción a la Física. Esto no lleva nota: sirve para decidir desde dónde arrancamos.
+          </div>
+          <div class="cards">
+            <label class="mini-card"><strong>Verde: puedo explicar</strong><textarea id="m5_verde" placeholder="Conceptos que puedo explicar a otro."></textarea></label>
+            <label class="mini-card"><strong>Amarillo: necesito repasar</strong><textarea id="m5_amarillo" placeholder="Conceptos que me suenan pero no manejo."></textarea></label>
+            <label class="mini-card"><strong>Rojo: estoy perdido/a</strong><textarea id="m5_rojo" placeholder="Conceptos que no entiendo o no recuerdo."></textarea></label>
+            <label class="mini-card"><strong>Pedido al profe</strong><textarea id="m5_pedido" placeholder="Qué necesitaríamos para retomar bien."></textarea></label>
+          </div>
+        </section>
+      </div>
+
+      <aside class="no-print">
+        <h2>Panel rápido</h2>
+        <p class="note">Avancen por estaciones. Al terminar, guarden y preparen la entrega.</p>
+        <div class="stack" style="margin-top: 12px;">
+          <button class="primary" data-go="1">1. Bitácora</button>
+          <button data-go="2">2. Clasificador</button>
+          <button data-go="3">3. Caso cotidiano</button>
+          <button data-go="4">4. Mini datos</button>
+          <button data-go="5">5. Semáforo</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <form id="submitForm" method="post" target="submitFrame" style="display:none;">
+    <input type="hidden" name="payload" id="submitPayload">
+  </form>
+  <iframe name="submitFrame" id="submitFrame" style="display:none;"></iframe>
+
+  <script>
+    const SUBMIT_URL = "";
+
+    const fields = [
+      "curso", "equipo", "integrantes",
+      "m1_seguro", "m1_suenan", "m1_no", "m1_metodo", "m1_conf",
+      "m2_materia", "m2_energia", "m2_rep", "m2_relacion",
+      "m3_situacion", "m3_sistema", "m3_intercambios", "m3_variables", "m3_pregunta",
+      "m4_patron", "m4_grafico", "m4_conclusion", "m4_falta",
+      "m5_verde", "m5_amarillo", "m5_rojo", "m5_pedido"
+    ];
+
+    const key = "diagnostico_intro_fisica";
+
+    function valueOf(id) {
+      const el = document.getElementById(id);
+      return el ? el.value : "";
+    }
+
+    function collect() {
+      const data = {};
+      fields.forEach((id) => data[id] = valueOf(id));
+      data.fecha = new Date().toISOString();
+      return data;
+    }
+
+    function fill(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && data[id] !== undefined) el.value = data[id];
+      });
+      updateRange();
+    }
+
+    function save() {
+      localStorage.setItem(key, JSON.stringify(collect()));
+      alert("Respuestas guardadas en este navegador.");
+    }
+
+    function submitAnswers() {
+      if (!SUBMIT_URL) {
+        alert("Todavía falta configurar la URL de entrega.");
+        return;
+      }
+
+      save();
+      document.getElementById("submitPayload").value = JSON.stringify(collect());
+      const form = document.getElementById("submitForm");
+      form.action = SUBMIT_URL;
+      form.submit();
+      alert("Respuestas enviadas. Avisale al docente si aparece algún error.");
+    }
+
+    function labelFor(id) {
+      const labels = {
+        curso: "Curso",
+        equipo: "Equipo",
+        integrantes: "Integrantes",
+        m1_seguro: "Temas que seguro vimos",
+        m1_suenan: "Temas que me suenan",
+        m1_no: "Temas que no vimos o no recuerdo",
+        m1_metodo: "Como trabajaban",
+        m1_conf: "Confianza del equipo",
+        m2_materia: "Materia",
+        m2_energia: "Energia",
+        m2_rep: "Representar o medir",
+        m2_relacion: "Relacion explicada",
+        m3_situacion: "Situacion elegida",
+        m3_sistema: "Sistema observado",
+        m3_intercambios: "Intercambios o transformaciones",
+        m3_variables: "Variables importantes",
+        m3_pregunta: "Duda investigable",
+        m4_patron: "Patron observado",
+        m4_grafico: "Grafico propuesto",
+        m4_conclusion: "Conclusion posible",
+        m4_falta: "Que falta saber",
+        m5_verde: "Verde",
+        m5_amarillo: "Amarillo",
+        m5_rojo: "Rojo",
+        m5_pedido: "Pedido al profe"
+      };
+      return labels[id] || id;
+    }
+
+    function prepareDelivery() {
+      const data = collect();
+      const lines = ["Mision Energia - Respuestas del equipo", ""];
+      fields.forEach((id) => {
+        lines.push(`${labelFor(id)}: ${data[id] || "-"}`);
+      });
+      document.getElementById("deliveryText").value = lines.join("\n");
+      document.getElementById("deliveryBox").classList.add("visible");
+      document.getElementById("deliveryText").select();
+      document.getElementById("deliveryBox").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function updateRange() {
+      const range = document.getElementById("m1_conf");
+      const out = document.getElementById("m1_conf_out");
+      out.textContent = `${range.value}/5`;
+    }
+
+    document.querySelectorAll("[data-go]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".mission").forEach((m) => m.classList.remove("active"));
+        document.querySelector(`.mission[data-mission="${btn.dataset.go}"]`).classList.add("active");
+        document.querySelectorAll("[data-go]").forEach((b) => b.classList.remove("primary"));
+        btn.classList.add("primary");
+      });
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", save);
+    document.getElementById("submitBtn").addEventListener("click", submitAnswers);
+    document.getElementById("deliveryBtn").addEventListener("click", prepareDelivery);
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      if (confirm("¿Borrar las respuestas guardadas de este equipo?")) {
+        localStorage.removeItem(key);
+        fields.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.value = id === "m1_conf" ? "3" : "";
+        });
+        document.getElementById("m3_situacion").value = "Calentar agua para mate";
+        updateRange();
+      }
+    });
+    document.getElementById("m1_conf").addEventListener("input", updateRange);
+
+    const saved = localStorage.getItem(key);
+    if (saved) fill(JSON.parse(saved));
+    if (SUBMIT_URL) document.getElementById("submitBtn").disabled = false;
+    updateRange();
+  </script>
+</body>
+</html>
