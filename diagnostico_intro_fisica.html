@@ -564,9 +564,9 @@
       updateRange();
     }
 
-    function save() {
+    function save(showAlert = true) {
       localStorage.setItem(key, JSON.stringify(collect()));
-      alert("Respuestas guardadas en este navegador.");
+      if (showAlert) alert("Respuestas guardadas en este navegador.");
     }
 
     function submitAnswers() {
@@ -575,12 +575,12 @@
         return;
       }
 
-      save();
+      save(false);
       document.getElementById("submitPayload").value = JSON.stringify(collect());
       const form = document.getElementById("submitForm");
       form.action = SUBMIT_URL;
       form.submit();
-      alert("Intentamos enviar las respuestas. Si el docente no las ve en la planilla, usen Preparar entrega.");
+      alert("Respuestas enviadas. Consultá con el docente si fueron registradas de forma correcta.");
     }
 
     function labelFor(id) {
